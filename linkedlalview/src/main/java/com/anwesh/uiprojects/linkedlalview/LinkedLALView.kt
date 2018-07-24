@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.linkedlalview
  * Created by anweshmishra on 25/07/18.
  */
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.MotionEvent
@@ -207,6 +208,15 @@ class LinkedLALView (ctx : Context) : View(ctx) {
             lal.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+
+        fun create(activity : Activity) : LinkedLALView {
+            val view : LinkedLALView = LinkedLALView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
