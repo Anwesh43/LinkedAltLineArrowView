@@ -184,4 +184,27 @@ class LinkedLALView (ctx : Context) : View(ctx) {
             curr.startUpdating(startcb)
         }
     }
+
+    data class Renderer(var view : LinkedLALView) {
+
+        private val lal : LinkedLAL = LinkedLAL(0)
+
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            lal.draw(canvas, paint)
+            animator.animate {
+                lal.update {i, scale ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            lal.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
