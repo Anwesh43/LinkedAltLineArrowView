@@ -8,6 +8,7 @@ import android.content.Context
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 
 val NODES : Int = 5
@@ -15,6 +16,9 @@ val NODES : Int = 5
 fun Canvas.drawLALNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
+    paint.color = Color.parseColor("#4CAF50")
+    paint.strokeWidth = Math.min(w, h) / 60
+    paint.strokeCap = Paint.Cap.ROUND
     val gap : Float = Math.min(w, h) / (2 * NODES)
     val index : Int = i % 2
     val sc1 : Float = Math.min(0.5f, scale) * 2
