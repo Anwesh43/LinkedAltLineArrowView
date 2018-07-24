@@ -113,4 +113,49 @@ class LinkedLALView (ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class LALNode(var i : Int, val state : State = State()) {
+
+        private var next : LALNode? = null
+
+        private var prev : LALNode? = null
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawLALNode(i, state.scale, paint)
+            next?.draw(canvas, paint)
+        }
+
+        fun update(stopcb : (Int, Float) -> Unit) {
+            state.update {
+                stopcb(i, it)
+            }
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
+        }
+
+        init {
+            addNeighbor()
+        }
+
+        fun addNeighbor() {
+            if (i < NODES - 1) {
+                next = LALNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : LALNode {
+            var curr : LALNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
