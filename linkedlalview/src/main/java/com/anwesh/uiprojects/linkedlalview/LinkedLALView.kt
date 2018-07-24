@@ -28,22 +28,23 @@ fun Canvas.drawLALNode(i : Int, scale : Float, paint : Paint) {
     save()
     translate(i * gap + gap/2, 0f)
     save()
-    translate(-gap/4 + gap * sc2, 0f)
+    translate(gap/4 + gap * sc2, 0f)
     for (j in 0..1) {
         save()
         rotate(30 * (1 - 2 * j) * fc)
+        drawLine(0f, 0f, -gap/2, 0f, paint)
         restore()
     }
     restore()
     restore()
 }
 
-fun Canvas.drawInAxis(cb : () -> Unit) {
+fun Canvas.drawInOppositeAxis(cb : () -> Unit) {
     save()
     translate(width.toFloat() / 2, height.toFloat() / 2)
-    for (i in 0..4) {
+    for (i in 0..1) {
         save()
-        rotate(90f * i)
+        rotate(180f * i)
         cb()
         restore()
     }
@@ -169,7 +170,7 @@ class LinkedLALView (ctx : Context) : View(ctx) {
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            canvas.drawInAxis {
+            canvas.drawInOppositeAxis {
                 curr.draw(canvas, paint)
             }
         }
